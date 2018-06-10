@@ -840,12 +840,12 @@ Name: birth_year, dtype: int64
 <<<
 
 ### Nullの判定
-以下は、attri_data_frame_index2にTokyoという文字列があるかどうかをisinで調べて、それぞれのセルにTrueかFalseが返されます。入っていればTrue、入っていなければFalseになっていることがわかります。
+- attri_data_frame_index2にTokyoという文字列があるかどうかをisinで調べる
+- それぞれのセルに指定文字列が入っていればTrue、入っていなければFalseになる
 ```
 # 値があるかどうかの確認
 attri_data_frame_index2.isin(["Tokyo"])
 ```
-Tokyoの要素にはTrueが返ってくる
 ```
 ID	birth_year	city	name
 e	False	False	True	False
