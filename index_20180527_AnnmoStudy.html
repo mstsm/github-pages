@@ -944,6 +944,11 @@ attri_data2 = {'ID':['3','4','7']
         ,'Math':[60,30,40]
         ,'English':[80,20,30]}
 attri_data_frame2 = DataFrame(attri_data2)
+```
+
+<<<
+
+```python
 print(attri_data_frame2)
 print(attri_data_frame1)
 ```
@@ -962,7 +967,7 @@ ID  Money       name sex
 ```
 <<<
 
-```python1
+```python
 # データのマージ
 pd.merge( attri_data_frame1, attri_data_frame2 )
 ```
@@ -984,18 +989,82 @@ pd.merge( attri_data_frame1, attri_data_frame2 )
 	- [参考3:Seaborn公式](http://seaborn.pydata.org/)
 
 <<<
-
 ![](http://visualisingadvocacy.org/sites/visualisingadvocacy.org/files/D3-index.jpg)
 
 <<<
-
-![](https://github.com/mstsm/github-pages/blob/master/image/matplot1.png)
+### モジュールのインポート
+```python
+# matplotlib と seabornの読み込み
+# seabornはきれいに図示できる
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+import seaborn as sns
+# JupiterNotebook グラフを表示させるために必要なマジックコマンド
+%matplotlib inline
+```
 
 <<<
-![](https://github.com/mstsm/github-pages/blob/master/image/matplot2.png)
+### 散布図
+```python
+# 散布図
+import numpy.random as random
+#　シード値の固定
+random.seed(0)
+# x軸のデータ
+x = np.random.randn(30)
+# y軸のデータ
+y = np.sin(x) + np.random.randn(30)
+```
 
 <<<
-![](https://github.com/mstsm/github-pages/blob/master/image/matplot3.png)
+
+### 散布図続き
+```python
+# plot
+plt.plot(x, y, "o") # "o"は小さい円(circle marker)
+#以下でも散布図が描ける
+#plt.scatter(x, y)
+# title
+plt.title("Title Name")
+# Xの座標名
+plt.xlabel("X")
+# Yの座標名
+plt.ylabel("Y")
+# gridの表示
+plt.grid(True)
+```
+<<<
+はいっ！
+![](https://github.com/mstsm/github-pages/blob/master/image/matplot1.jpg?raw=true1)
+
+<<<
+### 連続曲線
+```python
+# 連続曲線
+np.random.seed(0)
+# データの範囲
+numpy_data_x = np.arange(1000)
+
+# 乱数の発生と積み上げ
+numpy_random_data_y = np.random.randn(1000).cumsum() # 標準正規分布を1000個生成して、さらに積み上げした配列を生成
+print(len(numpy_random_data_y)) # 1000
+
+# label=とlegendでラベルをつけることが可能
+plt.plot(numpy_data_x,numpy_random_data_y,label="Label")
+plt.legend()
+
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.grid(True)
+```
+
+<<<
+はいっ！
+![](https://github.com/mstsm/github-pages/blob/master/image/matplot2.jpg?raw=true1)
+
+<<<
+![](https://github.com/mstsm/github-pages/blob/master/image/matplot3.png?raw=true1)
+![](https://github.com/mstsm/github-pages/blob/master/image/matplot4.png?raw=true1)
 
 ---
 
