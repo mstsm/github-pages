@@ -30,7 +30,7 @@
 				    <script type="text/template">
 # Ammo Study Group
 ## 2018/05/28
-Written by [Yuasa]().
+Written by [Yuasa](https://github.com/mstsm).
 
 ---
 
@@ -39,7 +39,7 @@ NumPy, SciPy, Pandas, Matpolot
 
 ---
 
-# ```NumPy```
+# 2.1.1 ```NumPy```
 
 <<<
 
@@ -349,7 +349,7 @@ print(three_mat **2)
 ```
 ---
 
-# ```SciPy```
+# 2.1.2 ```SciPy```
 
 <<<
 
@@ -517,7 +517,7 @@ print(newton(sample_function,0))
 ```
 ---
 
-# ```Pandas```
+# 2.1.3 ```Pandas```
 
 <<<
 
@@ -694,6 +694,8 @@ ID	birth_year	city	name
 0	100	1990	Tokyo	Hiroshi
 4	104	1982	Tokyo	Steeve
 ```
+
+値を複数の条件で取り出したい場合は、isin(リスト)で表現
 ```python
 #　条件（フィルター、複数の値）
 attri_data_frame1[attri_data_frame1['city'].isin(['Tokyo','Osaka'])]
@@ -823,30 +825,169 @@ e	100	1990	Tokyo	Hiroshi
 
 <<<
 
-# 値によるソート、デフォルトは昇順
+### 値によるソート、デフォルトは昇順
+```python
 attri_data_frame_index2.birth_year.sort_values()
-
+```
+```
 c    1982
 b    1989
 e    1990
 a    1992
 d    1997
 Name: birth_year, dtype: int64
+```
 
 <<<
 
-最後に、値があるかどうか、Nullの判定についてです。
-
+### Nullの判定
 以下は、attri_data_frame_index2にTokyoという文字列があるかどうかをisinで調べて、それぞれのセルにTrueかFalseが返されます。入っていればTrue、入っていなければFalseになっていることがわかります。
+```
 # 値があるかどうかの確認
 attri_data_frame_index2.isin(["Tokyo"])
-
+```
+Tokyoの要素にはTrueが返ってくる
+```
 ID	birth_year	city	name
 e	False	False	True	False
 b	False	False	False	False
 a	False	False	False	False
 d	False	False	False	False
 c	False	False	True	False
+```
+
+<<<
+### 欠落値
+```python
+#　欠損値の取り扱い
+# name をわざとすべてnanにする
+attri_data_frame_index2.name = np.nan
+attri_data_frame_index2.isnull()
+```
+nullの要素に対してはTrueが返ってくる
+```
+ID	birth_year	city	name
+e	False	False	False	True
+b	False	False	False	True
+a	False	False	False	True
+d	False	False	False	True
+c	False	False	False	True
+```
+
+<<<
+
+```python
+# nullを判定し、合計する
+attri_data_frame_index2.isnull().sum()
+```
+```
+ID            0
+birth_year    0
+city          0
+name          5
+dtype: int64
+```
+
+<<<
+### <練習問題 1>
+以下のデータに対して、Moneyが500以上の人を絞り込んで、レコードを表示させてください。
+```python
+from pandas import Series,DataFrame
+import pandas as pd
+
+attri_data1 = {'ID':['1','2','3','4','5']
+        ,'sex':['F','F','M','M','F']
+        ,'Money':[1000,2000,500,300,700]
+        ,'name':['Saito','Horie','Kondo','Kawada','Matsubara']}
+
+attri_data_frame1 = DataFrame(attri_data1)
+```
+
+<<<
+
+```python
+attri_data_frame1[ attri_data_frame1[ 'Money' ] >= 500 ]
+```
+```
+ID	Money	name	sex
+0	1	1000	Saito	F
+1	2	2000	Horie	F
+2	3	500	Kondo	M
+4	5	700	Matsubara	F
+```
+
+<<<
+
+### <練習問題 2>
+上記のデータに対して、男女別（MF別）の平均Moneyを求めてください。
+
+<<<
+
+答え
+```python
+# データのグループ集計 groupby
+attri_data_frame1.groupby('sex')['Money'].mean()
+```
+```
+sex
+F    1233.333333
+M     400.000000
+Name: Money, dtype: float64
+```
+
+<<<
+
+### <練習問題 3>
+上記のデータに対して、以下のデータの同じIDの人をキーとして、データをマージしてください。そして、MoneyとMathとEnglishの平均を求めてください。
+```python
+attri_data2 = {'ID':['3','4','7']
+        ,'Math':[60,30,40]
+        ,'English':[80,20,30]}
+attri_data_frame2 = DataFrame(attri_data2)
+print(attri_data_frame2)
+print(attri_data_frame1)
+```
+```
+English ID  Math
+0       80  3    60
+1       20  4    30
+2       30  7    40
+
+ID  Money       name sex
+0  1   1000      Saito   F
+1  2   2000      Horie   F
+2  3    500      Kondo   M
+3  4    300     Kawada   M
+4  5    700  Matsubara   F
+```
+<<<
+
+```python1
+# データのマージ
+pd.merge( attri_data_frame1, attri_data_frame2 )
+```
+```
+	ID	Money	name	sex	English	Math
+0	3	500	Kondo	M	80	60
+1	4	300	Kawada	M	20	30
+```
+---
+
+# 2.1.4 ```Matplotlib```
+
+<<<
+### ```Matplotlib```、```Seaborn```とは
+- Matplotlibとは…科学計算用ライブラリNumPyのためのグラフ描画ライブラリ。
+- Seabornとは…Matplotlibの野暮ったい感じを改善し、より美しく、より簡単に実現するためのラッパー的存在。
+	- [参考1:pythonで美しいグラフ描画](https://qiita.com/hik0107/items/3dc541158fceb3156ee0)
+	- [参考2:Matplot公式](http://matplotlib.org/)
+	- [参考3:Seaborn公式](http://seaborn.pydata.org/)
+
+<<<
+
+![](http://visualisingadvocacy.org/sites/visualisingadvocacy.org/files/D3-index.jpg)
+
+<<<
 
 
 
@@ -857,6 +998,10 @@ c	False	False	True	False
 <br>
 - Markdown記法でのスライド作成ツール
 - いい感じのスライドをパパッと作成可能
+
+
+
+
 
 				    </script>
 				</section>
