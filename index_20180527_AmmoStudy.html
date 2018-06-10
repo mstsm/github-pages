@@ -638,6 +638,7 @@ e  104        1982      Tokyo   Steeve
 attri_data_frame1.T # DataFrameクラスのメソッドT
 ```
 ```
+実行結果
 0	1	2	3	4
 ID	100	101	102	103	104
 birth_year	1990	1989	1992	1997	1982
@@ -651,12 +652,13 @@ name	Hiroshi	Akiko	Yuki	Satoru	Steeve
 
 <<<
 
-### カラム（列）を指定して抽出```DataFrame```
+### カラム（列）を指定して抽出 ```DataFrame```
 ```python
 # 列名の指定（１つ）
 attri_data_frame1.birth_year
 ```
 ```
+実行結果
 0    1990
 1    1989
 2    1992
@@ -667,12 +669,13 @@ Name: birth_year, dtype: int64
 
 <<<
 
-### 複数カラム（列）を指定して抽出```DataFrame```
+### 複数カラム（列）を指定して抽出 ```DataFrame```
 ```python
 # 列名の指定(複数の場合)
 attri_data_frame1[["ID","birth_year"]]
 ```
 ```
+実行結果
 ID	birth_year
 0	100	1990
 1	101	1989
@@ -683,23 +686,26 @@ ID	birth_year
 
 <<<
 
-### フィルタ：条件を指定してデータ抽出```DataFrame```
+### フィルタ：条件を指定してデータ抽出 ```DataFrame```
+
 ```python
 #　条件（フィルター）　CityがTokyoである要素を抽出
 attri_data_frame1[attri_data_frame1['city']=='Tokyo']
 ```
 ```
+実行結果
 ID	birth_year	city	name
 0	100	1990	Tokyo	Hiroshi
 4	104	1982	Tokyo	Steeve
 ```
 
-値を複数の条件で取り出したい場合は、isin(リスト)で表現
 ```python
+# 値を複数の条件で取り出したい場合は、isin(リスト)で表現
 #　条件（フィルター、複数の値）
 attri_data_frame1[attri_data_frame1['city'].isin(['Tokyo','Osaka'])]
 ```
 ```
+実行結果
 ID	birth_year	city	name
 0	100	1990	Tokyo	Hiroshi
 1	101	1989	Osaka	Akiko
@@ -708,8 +714,9 @@ ID	birth_year	city	name
 
 <<<
 ### [やってみよう]
-- 他にも条件を変更（birth_yearが1990未満など）して、フィルターを実行してみましょう。
+
 ```python
+# 他にも条件を変更（birth_yearが1990未満など）して、フィルターを実行してみましょう。
 attri_data_frame1[attri_data_frame1['city']<1900]
 ```
 ```
@@ -723,8 +730,9 @@ ID	birth_year	city	name
 <<<
 
 ### 特定の列の削除 ```DataFrame```
-- axisで軸を設定し、1の場合は列方向。行の削除はインデックスを指定して、axis=0。
+
 ```python
+# axisで軸を設定し、1の場合は列方向。行の削除はインデックスを指定して、axis=0。
 # データの列の削除
 attri_data_frame1.drop(['birth_year'],axis=1)
 ```
@@ -764,8 +772,9 @@ English   ID  math sex
 ```python
 # データのマージ（内部結合、詳しくは次の章で）
 pd.merge(attri_data_frame1,attri_data_frame2)
+# idが共通である100,101,102が結合される
 ```
-- idが共通である100,101,102が結合される
+
 ```
 実行結果
 ID	birth_year	city	name	English	math	sex
@@ -851,6 +860,7 @@ Name: birth_year, dtype: int64
 ### Nullの判定
 - attri_data_frame_index2にTokyoという文字列があるかどうかをisinで調べる
 - それぞれのセルに指定文字列が入っていればTrue、入っていなければFalseになる
+
 ```python
 # 値があるかどうかの確認
 attri_data_frame_index2.isin(["Tokyo"])
@@ -1047,7 +1057,7 @@ plt.ylabel("Y")
 plt.grid(True)
 ```
 <<<
-はいっ！<br>
+
 ![散布図](https://github.com/mstsm/github-pages/blob/master/image/matplot1.jpg?raw=true1)
 
 <<<
@@ -1073,7 +1083,7 @@ plt.grid(True)
 
 <<<
 
-はいっ！<br>
+
 ![連続曲線](https://github.com/mstsm/github-pages/blob/master/image/matplot2.jpg?raw=true1)
 
 <<<
@@ -1096,7 +1106,7 @@ plt.grid(True)
 
 <<<
 
-はいっ！<br>
+
 ![Sin波](https://github.com/mstsm/github-pages/blob/master/image/matplot3.png?raw=true1)
 
 <<<
@@ -1112,7 +1122,7 @@ plt.plot(x, sample_function(x))
 plt.grid(True)
 ```
 <<<
-はいっ！<br>
+
 ![二次関数](https://github.com/mstsm/github-pages/blob/master/image/matplot4.png?raw=true1)
 
 <<<
@@ -1128,7 +1138,7 @@ plt.grid(True)
 
 
 <<<
-はいっ！<br>
+
 ![二次関数](https://github.com/mstsm/github-pages/blob/master/image/matplot5.png?raw=true1)
 
 <<<
@@ -1149,7 +1159,7 @@ plt.grid(True)
 ```
 
 <<<
-はいっ！<br>
+
 ![1次関数](https://github.com/mstsm/github-pages/blob/master/image/matplot6.png?raw=true1)
 
 <<<
@@ -1173,7 +1183,7 @@ plt.plot(y, np.cos(2*y))
 plt.grid(True)
 ```
 <<<
-はいっ！<br>
+
 ![cos](https://github.com/mstsm/github-pages/blob/master/image/matplot7.png?raw=true1)
 
 <<<
