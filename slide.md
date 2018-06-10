@@ -39,6 +39,7 @@ sample_numpy_data
 array([ 9,  2,  3,  4, 10,  6,  7,  8,  1,  5])
 ```
 <<<
+
 ### データの型
 ```Python
 # データの型
@@ -818,10 +819,7 @@ a	False	False	False	False
 d	False	False	False	False
 c	False	False	True	False
 
-
-
 ---
-
 
 ### このスライドは **[reveal.js](https://github.com/hakimel/reveal.js/)** で作成！
 <br>
