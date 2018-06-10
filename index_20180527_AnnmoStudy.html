@@ -29,13 +29,12 @@
 				    data-separator-vertical="\n<<<\n">
 				    <script type="text/template">
 # Ammo Study Group
-## 2018/05/28
+## 2018
 Written by [Yuasa](https://github.com/mstsm).
 
 ---
 
-# Chapter2
-NumPy, SciPy, Pandas, Matpolot
+# 2.1 ```Numpy、Scipy、Pandas、Matpltolib```の基礎
 
 ---
 
@@ -1034,8 +1033,8 @@ plt.ylabel("Y")
 plt.grid(True)
 ```
 <<<
-はいっ！
-![](https://github.com/mstsm/github-pages/blob/master/image/matplot1.jpg?raw=true1)
+はいっ！<br>
+![散布図](https://github.com/mstsm/github-pages/blob/master/image/matplot1.jpg?raw=true1)
 
 <<<
 ### 連続曲線
@@ -1059,12 +1058,150 @@ plt.grid(True)
 ```
 
 <<<
-はいっ！
-![](https://github.com/mstsm/github-pages/blob/master/image/matplot2.jpg?raw=true1)
+
+はいっ！<br>
+![連続曲線](https://github.com/mstsm/github-pages/blob/master/image/matplot2.jpg?raw=true1)
 
 <<<
-![](https://github.com/mstsm/github-pages/blob/master/image/matplot3.png?raw=true1)
-![](https://github.com/mstsm/github-pages/blob/master/image/matplot4.png?raw=true1)
+
+### sin波
+
+```python
+# 2行1列のグラフの1つ目
+plt.subplot(2,1,1)
+x = np.linspace(-10, 10,100)
+plt.plot(x, np.sin(x))
+
+# 2行1列のグラフの2つ目
+plt.subplot(2,1,2)
+y = np.linspace(-10, 10,100)
+plt.plot(y, np.sin(2*y))
+
+plt.grid(True)
+```
+
+<<<
+
+はいっ！<br>
+![Sin波](https://github.com/mstsm/github-pages/blob/master/image/matplot3.png?raw=true1)
+
+<<<
+
+### 二次関数
+```python
+# 関数の定義
+def sample_function(x):
+    return (x**2 + 2*x + 1)
+
+x = np.arange(-10, 10)
+plt.plot(x, sample_function(x))
+plt.grid(True)
+```
+<<<
+はいっ！<br>
+![二次関数](https://github.com/mstsm/github-pages/blob/master/image/matplot4.png?raw=true1)
+
+<<<
+### ヒストグラム
+```python
+# histogram
+random.seed(0)
+plt.hist(np.random.randn(10**5)*10 + 50, bins=60,range=(20,80))
+plt.grid(True)
+```
+```
+hist(x, bins=None, range=None, density=None, weights=None, cumulative=False, bottom=None, histtype='bar', align='mid', orientation='vertical', rwidth=None, log=False, color=None, label=None, stacked=False, normed=None, hold=None, data=None, **kwargs)
+```
+
+<<<
+はいっ！<br>
+![二次関数](https://github.com/mstsm/github-pages/blob/master/image/matplot5.png?raw=true1)
+
+<<<
+
+### <練習問題 1>
+y = 5x + 3 (xは-10から10の値)のグラフを書いてみましょう。
+
+<<<
+### 回答例
+```python
+# 関数の定義
+def sample_function(x):
+    return (5*x + 3)
+
+x = np.arange(-10, 10)
+plt.plot(x, sample_function(x))  #import matplotlib.pyplot as plt
+plt.grid(True)
+```
+
+<<<
+はいっ！<br>
+![1次関数](https://github.com/mstsm/github-pages/blob/master/image/matplot6.png?raw=true1)
+
+<<<
+### <練習問題 2>¶
+先ほどのsin関数に加えて、cos関数のグラフも書いてください。
+
+<<<
+### 回答例
+```python
+# cos関数
+# 2行1列のグラフの1つ目
+plt.subplot(2,1,1)
+x = np.linspace(-10, 10,100)  # numpy.linspace(start, stop, num = 50, endpoint = True, retstep = False, dtype = None)
+plt.plot(x, np.cos(x))
+
+# 2行1列のグラフの2つ目
+plt.subplot(2,1,2)
+y = np.linspace(-10, 10,100)
+plt.plot(y, np.cos(2*y))
+
+plt.grid(True)
+```
+<<<
+はいっ！<br>
+![cos](https://github.com/mstsm/github-pages/blob/master/image/matplot7.png?raw=true1)
+
+<<<
+### <練習問題 3>
+0から1の値をとる一様乱数を1000個、2組発生させて、それぞれのヒストグラムを書いてみましょう。結果はどうなっていますか。また、1000個だけではなく、100個や10000個などでも実施してみましょう。何かわかることはありますか。なお、それぞれのヒストグラムは別のグラフに表示するために、plt.subplotを利用してください。なお、一様乱数とは、ある数から数まで等確率で発生する乱数のことをいい、np.random.uniformを使ってください。
+
+<<<
+### 回答例
+```python
+# histogram
+plt.subplot(2,1,1)
+random.seed(0)
+plt.hist(np.random.uniform(0,1,10000), bins=50, range=(0,1)) # 正規分布ではなく一様乱数。 正規分布はrandn(要素数)
+plt.grid(True)
+
+plt.subplot(2,1,2)
+random.seed(1)
+plt.hist(np.random.uniform(0,1,10000), bins=50, range=(0,1))
+plt.grid(True)
+```
+<<<
+![uniform](https://github.com/mstsm/github-pages/blob/master/image/matplot8.png?raw=true1)
+
+---
+
+# 2.2 総合問題
+
+---
+
+# 2.2.1 モンテカルロ法
+<<<
+
+乱数を発生させる方法を使って、円周率を求めるプログラムを作成してみましょう。
+
+1. 一様分布に従う乱数を2組発生させて、それぞれ10,000個の一様乱数を作ってみましょう。なお、一様乱数とは、ある数から数まで等確率で発生する乱数のことをいい、np.random.uniformを使います。使い方としては、0から1までの数を10個発生させる場合は、np.random.uniform(0.0, 1.0, 10)とします。
+
+1. x−y軸を使った中心(0,0)、半径1の円と、長さ1の正方形を考え、円の面積は ππ となり、正方形の面積は1となります。ここで先ほどのxとyの組み合わせの乱数10000個のうち、円の内部に入る点は何組あるでしょうか。ここで、円の内部に入るとは、x−y座標の原点から点 (x, y) のベクトルの長さを求め、それが1より小さくなる場合を判定基準とします。なお、その長さを求めるために、ユークリッドノルム( x2+y2⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯√x2+y2 )を使い、 math.hypot(x,y)で計算できます。（さらに、余裕があれば、円の中に入ったxとyの組み合わせと外に出たxとyの組み合わせをプロットして図にしてみましょう。）
+
+1. 半径1の1/4の円の面積と長さ1の長方形の面積の比は、 π/4:1π/4:1 となりますので、これと先ほどの結果を利用して、円周率を求めてみましょう。
+
+<<<
+
 
 ---
 
