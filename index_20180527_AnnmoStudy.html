@@ -903,7 +903,7 @@ attri_data_frame1 = DataFrame(attri_data1)
 ```
 
 <<<
-
+### 回答例
 ```python
 attri_data_frame1[ attri_data_frame1[ 'Money' ] >= 500 ]
 ```
@@ -922,7 +922,7 @@ ID	Money	name	sex
 
 <<<
 
-答え
+### 回答例
 ```python
 # データのグループ集計 groupby
 attri_data_frame1.groupby('sex')['Money'].mean()
@@ -946,7 +946,7 @@ attri_data_frame2 = DataFrame(attri_data2)
 ```
 
 <<<
-
+### 回答例
 ```python
 print(attri_data_frame2)
 print(attri_data_frame1)
@@ -965,7 +965,7 @@ ID  Money       name sex
 4  5    700  Matsubara   F
 ```
 <<<
-
+### 回答例続き
 ```python
 # データのマージ
 pd.merge( attri_data_frame1, attri_data_frame2 )
@@ -1139,7 +1139,7 @@ plt.grid(True)
 ![1次関数](https://github.com/mstsm/github-pages/blob/master/image/matplot6.png?raw=true1)
 
 <<<
-### <練習問題 2>¶
+### <練習問題 2>
 先ほどのsin関数に加えて、cos関数のグラフも書いてください。
 
 <<<
