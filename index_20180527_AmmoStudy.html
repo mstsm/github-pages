@@ -1224,10 +1224,160 @@ plt.grid(True)
 1. 一様分布に従う乱数を2組発生させて、それぞれ10,000個の一様乱数を作ってみましょう。なお、一様乱数とは、ある数から数まで等確率で発生する乱数のことをいい、np.random.uniformを使います。使い方としては、0から1までの数を10個発生させる場合は、np.random.uniform(0.0, 1.0, 10)とします。
 
 <<<
-2. x−y軸を使った中心(0,0)、半径1の円と、長さ1の正方形を考え、円の面積は ππ となり、正方形の面積は1となります。ここで先ほどのxとyの組み合わせの乱数10000個のうち、円の内部に入る点は何組あるでしょうか。ここで、円の内部に入るとは、x−y座標の原点から点 (x, y) のベクトルの長さを求め、それが1より小さくなる場合を判定基準とします。なお、その長さを求めるために、ユークリッドノルム( x2+y2⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯√x2+y2 )を使い、 math.hypot(x,y)で計算できます。（さらに、余裕があれば、円の中に入ったxとyの組み合わせと外に出たxとyの組み合わせをプロットして図にしてみましょう。）
+
+2. x−y軸を使った中心(0,0)、半径1の円と、長さ1の正方形を考え、円の面積は ππ となり、正方形の面積は1となります。ここで先ほどのxとyの組み合わせの乱数10000個のうち、円の内部に入る点は何組あるでしょうか。ここで、円の内部に入るとは、x−y座標の原点から点 (x, y) のベクトルの長さを求め、それが1より小さくなる場合を判定基準とします。なお、その長さを求めるために、ユークリッドノルム( √x2+y2 )を使い、 math.hypot(x,y)で計算できます。（さらに、余裕があれば、円の中に入ったxとyの組み合わせと外に出たxとyの組み合わせをプロットして図にしてみましょう。）
 
 <<<
 3. 半径1の1/4の円の面積と長さ1の長方形の面積の比は、 π/4:1π/4:1 となりますので、これと先ほどの結果を利用して、円周率を求めてみましょう。
+
+<<<
+```python
+import math
+import pandas as pd
+x = np.random.uniform(0,1,1000) #
+y = np.random.uniform(0,1,1000) #
+cond = x**2 + y**2 <= 1
+c = len(x[cond])
+plt.scatter(x[~cond], y[~cond], c='r') #
+plt.scatter(x[cond], y[cond], c='b')
+print('count: {0}, Π = {1}'.format(c, float(c) / n * 4))
+```
+![mo](https://github.com/mstsm/github-pages/blob/master/image/matplot9.png?raw=true1)
+
+---
+
+# 3 記述統計学と単回帰分析
+
+---
+
+# 3.1 記述統計学と単回帰分析
+
+<<<
+
+### モジュールのインポート
+
+```python
+# 以下のモジュールを使うので、あらかじめ読み込んでおいてください
+import numpy as np
+import numpy.random as random
+import scipy as sp
+import pandas as pd
+from pandas import Series, DataFrame
+
+# 可視化モジュール
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+import seaborn as sns
+%matplotlib inline
+
+# 小数第３まで表示
+%precision 3
+```
+
+<<<
+
+### 3.1.1 記述統計学
+> キーワード：記述統計学、量的データ、質的データ、ヒストグラム、四分位範囲、要約統計量、平均、分散、標準偏差、変動係数、散布図、相関係数N
+
+<<<
+
+### webからZipファイルをダウンロードして展開
+```python
+# webからデータを取得したり、zipファイルを扱うためのモジュール
+import requests, zipfile
+from io import StringIO
+import io
+# chap2ディレクトリを作成
+mkdir chap2
+# chap2へ移動
+cd chap2
+# データがあるurl の指定
+zip_file_url = "http://archive.ics.uci.edu/ml/machine-learning-databases/00356/student.zip"
+# データをurlから取得する
+r = requests.get(zip_file_url, stream=True) #
+# zipfileを読み込み展開する
+z = zipfile.ZipFile(io.BytesIO(r.content)) #BytesIO()
+z.extractall() #ZipFile.extractall()
+# 展開したファイルのDataFrameクラスのインスタンスとして読み込む
+student_data_math = pd.read_csv("student-mat.csv", sep=";") # 第二引数で区切り文字の指定 sep=';'
+
+```
+<<<
+### 続き
+```python
+# すべてのカラムの情報等チェック
+student_data_math.info()
+```
+```python
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 395 entries, 0 to 394
+Data columns (total 33 columns):
+school        395 non-null object
+sex           395 non-null object
+age           395 non-null int64
+address       395 non-null object
+famsize       395 non-null object
+Pstatus       395 non-null object
+Medu          395 non-null int64
+Fedu          395 non-null int64
+Mjob          395 non-null object
+Fjob          395 non-null object
+reason        395 non-null object
+guardian      395 non-null object
+traveltime    395 non-null int64
+studytime     395 non-null int64
+failures      395 non-null int64
+schoolsup     395 non-null object
+famsup        395 non-null object
+paid          395 non-null object
+activities    395 non-null object
+nursery       395 non-null object
+higher        395 non-null object
+internet      395 non-null object
+romantic      395 non-null object
+famrel        395 non-null int64
+freetime      395 non-null int64
+goout         395 non-null int64
+Dalc          395 non-null int64
+Walc          395 non-null int64
+health        395 non-null int64
+absences      395 non-null int64
+G1            395 non-null int64
+G2            395 non-null int64
+G3            395 non-null int64
+dtypes: int64(16), object(17)
+memory usage: 101.9+ KB
+```
+
+<<<
+### データの種類
+- 量的データ：比率データ、間隔データ
+	- 例）人数、金額、身長
+- 質的データ：順位データ、カテゴリデータ
+	- 例）性別、血液型、好きな食べもの
+> 参照）[データの種類](https://www.codereading.com/statistics/level-of-measurement.html)
+
+<<<
+```python
+student_data_math.groupby('sex')["age"].mean()
+```
+```
+sex
+F    16.730769
+M    16.657754
+Name: age, dtype: float64
+```
+<<<
+
+
+<<<
+
+統計解析
+- 記述統計
+	- データをまとめて見やすく整理し、データの持っている概ねの情報を把握する。
+- 推測統計
+	- 確率分布に基づいたモデルを用いて精密な解析を行うこと。次の章
+
 
 <<<
 
