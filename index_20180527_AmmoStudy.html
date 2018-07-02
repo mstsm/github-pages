@@ -1443,10 +1443,10 @@ Name: Walc, dtype: float64
 サンプルを見て、10や2や色々と数字がありました。それぞれの数字がいったいどれくらいあるのか観測するのが、次のヒストグラムです。
 前のデータの可視化で学びました。matplotlibを使って、histでそのグラフを表示させます。
 
+<<<
 ```python
 student_data_math = pd.read_csv("student-mat.csv")
 student_data_math = pd.read_csv("student-mat.csv", sep=";")
-
 # histogram、データの指定
 plt.hist(student_data_math.absences) # 学校の欠席数
 # それぞれのラベル
@@ -1455,6 +1455,69 @@ plt.xlabel("absences")
 # グリッドをつける
 plt.grid(True)
 ```
+<<<
+![hist](https://github.com/mstsm/github-pages/blob/master/image/matplot10.png?raw=true1)
+0から10までの数字付近が多くなっており、また70以上など(の数字)もあり、テールな分布になっています。
+テールとは、分布の裾が緩やかに減少しているような分布です。
+なお、上のような分布を「右に歪みのある分布」といい、見た目とは異なり、よく間違えられるので表現に注意しましょう。
+
+<<<
+このヒストグラムは、データの全体像を見る上では欠かせないものですが、どのような時にデータが偏っているといえるのかなど、客観性が少し乏しくなります。
+そのため、次の要約統計量（中央値、平均、標準偏差など）について計算することで、データの傾向を数値化し、より客観的にデータを表現することができます。
+```python
+# 平均値
+print("平均値：", student_data_math.absences.mean())
+# 中央値：中央値でデータを分けると中央値の前後でデータ数が同じになる（データの真ん中の値）、外れ値の値に影響を受けにくい
+print("中央値：", student_data_math.absences.median())
+# 最頻値：最も頻度が多い値
+print("最頻値：", student_data_math.absences.mode())
+```
+```
+平均値： 5.708860759493671
+中央値： 4.0
+最頻値： 0    0
+dtype: int64
+```
+<<<
+```python
+# 分散
+student_data_math.absences.var()
+# 標準偏差 σ
+student_data_math.absences.std()
+```
+<<<
+
+なお、平均値の計算は以下となります（ここでxixiを第ii番目のデータ（値）とします）。
+x⎯⎯⎯=1n∑i=1nxi
+次に、このデータが散らばっているのか、それともまとまっている（平均付近に固まっている）のかを調べるのが分散になり、式は以下です。
+σ2=1n∑i=1n(xi−x⎯⎯⎯)2
+該当の変数を指定した後に、var()で計算できます。
+<<<
+
+### パーセントタイル値と中央値
+なお「パーセンタイル値」とは、全体を100として小さい方から数えて何番になるのかを示す数値です。
+例えば、10パーセンタイルは100個のデータのうち小さいほうから数えて10番目ということになります。
+50パーセンタイルだと50番目で真ん中の値となり、中央値になります。
+![relation](http://ghw.pfizer.co.jp/comedical/evaluation/images/img_relation_01.gif)
+
+<<<
+```python
+# 要約統計量 Pandasでデータフレームとして読み込むことでdescribe(メソッド)が使える
+student_data_math.absences.describe()
+#それぞれ順にデータ数、平均値、標準偏差、最小値、25、50、75パーセントタイル値、そして最大値になります。
+
+count    395.000000
+mean       5.708861
+std        8.003096
+min        0.000000
+25%        0.000000
+50%        4.000000
+75%        8.000000
+max       75.000000
+Name: absences, dtype: float64
+```
+<<<
+
 
 ---
 
