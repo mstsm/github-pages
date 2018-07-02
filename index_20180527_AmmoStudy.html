@@ -1602,8 +1602,93 @@ plt.grid(True)
 <<<
 
 ### 変動係数
+分散や標準偏差では異なる種類のデータの単純比較ができない。データの大きさがそもそも異なると、大きな値をとるものの方が偏差も大きくなる傾向。
+例えば、株価（日経平均など）の標準偏差と為替（ドル円など）の標準偏差はそれぞれ計算することができる。しかし、2万円前後で動いている日経平均と100円前後で動いている為替の標準偏差では、スケールが異なるので比較するのはナンセンス。
 
+そこで、以下の変動係数を使うと、スケールに依存せず、比較が可能となる。定義式は以下。標準偏差を平均値で割る。
+
+#### CV＝標準偏差/平均値
+
+<<<
+### 変動係数 続き
+```python
+# 変動係数：欠席数
+student_data_math.absences.std() / student_data_math.absences.mean()
+```
+```
+1.402
+```
+```python
+# それぞれの変動係数をまとめて計算
+student_data_math.std() / student_data_math.mean()
+```
+```
+落第数（failures）と欠席数（absences）のデータの散らばり具合が大きいことがわかる。
+age           0.076427
+Medu          0.398177
+Fedu          0.431565
+traveltime    0.481668
+studytime     0.412313
+failures      2.225319
+famrel        0.227330
+freetime      0.308725
+goout         0.358098
+Dalc          0.601441
+Walc          0.562121
+health        0.391147
+absences      1.401873
+G1            0.304266
+G2            0.351086
+G3            0.439881
+dtype: float64
+```
+
+<<<
+
+### 2変数の相関
+これまでは基本的に1変数のみに着目をして、グラフや要約統計量を算出してきた。
+次は、変数間の関係性を見ていくために、散布図と相関係数について学ぶ。
+次の散布図は1期目の成績G1と最終成績G3の図です。
+
+<<<
+
+```python
+# 散布図
+plt.plot(student_data_math.G1,student_data_math.G3, 'o')
+# ラベル
+plt.ylabel("G3 grade")
+plt.xlabel("G1 grade")
+plt.grid(True)
+```
+
+![sanpu](https://github.com/mstsm/github-pages/blob/master/image/matplot14.png?raw=true1)
+当たり前だが、一期目の成績がいい人は三期目の成績もよさそう。
+
+<<<
+
+### 共分散
+共分散とは、2 種類（2 変数）のデータの関係を示す指標です。
+2 つの変数、例えば、あるクラスの英語の点数と数学の点数の関係を考えることにしましょう。
+共分散が正であるときは、一方の値が増加するともう一方の値が増加する傾向にあるといえます。これを正の相関といいます。
+一方、共分散が負である時は、一方の値が増加するともう一方の値が減少する傾向にあるといえます。これを負の相関といいます。
+また、共分散の絶対値が大きいほどその相関関係は強く、共分散が 0 に近いほど相関関係は小さいといえます。
+
+【参考】https://sci-pursuit.com/math/statistics/covariance.html
+
+数式は割愛
+
+<<<
+### 共分散行列
+```python
+# 共分散行列
+np.cov(student_data_math.G1, student_data_math.G3) # Covariance共分散
+```
+```
+array([[11.017, 12.188],
+       [12.188, 20.99 ]])
+```
 ---
+
 
 
 ### このスライドは **[reveal.js](https://github.com/hakimel/reveal.js/)** で作成！
