@@ -1439,6 +1439,22 @@ Name: Walc, dtype: float64
 
 <<<
 
+まずは、このデータの中にある欠席数について考えてみることにします。
+サンプルを見て、10や2や色々と数字がありました。それぞれの数字がいったいどれくらいあるのか観測するのが、次のヒストグラムです。
+前のデータの可視化で学びました。matplotlibを使って、histでそのグラフを表示させます。
+
+```python
+student_data_math = pd.read_csv("student-mat.csv")
+student_data_math = pd.read_csv("student-mat.csv", sep=";")
+
+# histogram、データの指定
+plt.hist(student_data_math.absences) # 学校の欠席数
+# それぞれのラベル
+plt.ylabel("count")
+plt.xlabel("absences")
+# グリッドをつける
+plt.grid(True)
+```
 
 ---
 
